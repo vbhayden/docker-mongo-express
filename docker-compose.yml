@@ -1,0 +1,65 @@
+version: "3"
+
+services:
+
+  mongo:
+    image: mongo:4.2.10
+    container_name: mongo
+    restart: always
+    volumes:
+      - ./mongo/data:/data/db
+    ports:
+      - "127.0.0.1:27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+
+  mongo-express:
+    image: mongo-express:0.54.0
+    container_name: express
+    restart: always
+    ports:
+      - 127.0.0.1:8081:8081
+    environment:
+      ME_CONFIG_BASICAUTH_USERNAME: ${UI_USERNAME}
+      ME_CONFIG_BASICAUTH_PASSWORD: ${UI_PASSWORD}
+      ME_CONFIG_OPTIONS_EDITORTHEME: darcula
+      ME_CONFIG_MONGODB_SERVER: mongo   
+      ME_CONFIG_MONGODB_PORT: 27017        
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_USERNAME}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_PASSWORD}
+
+  # Nginx instance controlling traffic to each service.
+  nginx:
+    restart: always
+    build:
+      context: nginx
+      args:
+        - HOSTNAME=${HOSTNAME}
+    ports:
+      - 80:80
+      - 443:443
+    container_name: nginx
+    volumes:
+      - ./data/nginx/letsencrypt:/usr/share/nginx/html
+      - ./certbot/etc:/usr/share/keys
+    networks:
+      - public
+
+  # Certbot for SSL automation.
+  certbot:
+    container_name: certbot
+    image: certbot/certbot
+    volumes:
+      - ./data/keys:/var/lib/letsencrypt
+      - ./data/nginx/letsencrypt:/data/letsencrypt
+      - ./certbot/etc:/etc/letsencrypt
+      - ./certbot/log:/var/log/letsencrypt
+    networks:
+      - public
+    depends_on:
+      - nginx
+
+networks:
+  public:
+    driver: bridge
