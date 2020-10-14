@@ -20,7 +20,7 @@ The repo comes with an `example.env` file that you will want to (but really shou
 
 Service|Variable|Why am I setting this?
 -|-|-
-**Nginx**|`HOSTNAME`|the domain name of the machine used to host this stack, can be `localhost`
+**Nginx**|`HOSTNAME`|Domain name of the machine used to host this stack, can be `localhost`
 **MongoDB**|`MONGO_USERNAME`|Username for MongoDB
 -|`MONGO_PASSWORD`|Password for MongoDB
 **Mongo Express**|`UI_USERNAME`|Username for the Express UI
