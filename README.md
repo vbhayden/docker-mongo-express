@@ -32,5 +32,4 @@ This stack uses Certbot and Nginx to handle SSL, including temporary self-signed
 With that, the stack can start without issue but to get an actual SSL cert from Certbot:
 ```
 sudo ./certbot/generate.sh <HOSTNAME>
-sudo docker-compose restart nginx
 ```
