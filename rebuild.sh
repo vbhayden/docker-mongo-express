@@ -1,11 +1,5 @@
 #!/bin/bash
 
-rm .env
-touch .env
-cat local.env >> .env
-echo "" >> .env
-cat ../global.env >> .env
-
 # Stop the existing docker containers we made with Compose.
 docker-compose stop
 
