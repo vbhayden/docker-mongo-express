@@ -4,7 +4,7 @@ Simplified MongoDB instance with the **[Express UI](https://hub.docker.com/_/mon
 This repo contains a Docker Compose setup for standing up a MongoDB instance alongside the popular Mongo Express UI, with Expess proxied behind Nginx for SSL and the common ENV variables ready to be configured.  The scripts here assume an Ubuntu-like OS, but can be modified for others without much issue.
 
 ## Setup
-Setup is pretty straightforward, we need to ensure that Docker is installed and then it handles the rest.
+Setup is pretty straightforward, we need to ensure that Docker is installed and then it handles the rest.  SSL is also pretty quick, but does take a few more steps.
 
 ### tl;dr:
 - `git clone https://github.com/vbhayden/docker-mongo-express`
